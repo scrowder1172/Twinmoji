@@ -45,6 +45,8 @@ struct CardView: View {
         .fixedSize()
         .shadow(radius: 10)
         .disabled(userCanAnswer == false)
+        .transition(.push(from: .top))
+        .id(card)
     }
 }
 
