@@ -13,6 +13,8 @@ import SwiftUI
 struct CardView: View {
     
     var card: [String]
+    var userCanAnswer: Bool
+    var onSelect: (String) -> Void
     
     var rows: Int {
         if card.count == 12 {
@@ -30,7 +32,7 @@ struct CardView: View {
                         let text = card[i * 3 + j]
                         
                         Button(text) {
-                            // emoji was selected
+                            onSelect(text)
                         }
                     }
                 }
@@ -42,9 +44,12 @@ struct CardView: View {
         .clipShape(.rect(cornerRadius: 20))
         .fixedSize()
         .shadow(radius: 10)
+        .disabled(userCanAnswer == false)
     }
 }
 
 #Preview {
-    CardView(card: ["1", "2", "3", "4", "5", "6", "7", "8", "9"])
+    CardView(card: ["1", "2", "3", "4", "5", "6", "7", "8", "9"], userCanAnswer: true) { _ in
+        
+    }
 }
