@@ -14,7 +14,7 @@ import SwiftUI
 struct TwinmojiApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(itemCount: 9)
         }
     }
 }

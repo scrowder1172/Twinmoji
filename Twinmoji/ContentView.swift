@@ -11,6 +11,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    let allEmoji = Array("😎🥹🥰😔😂😳🧐🙂😇😅😆😙😬🙃😍🥸😣😶🙄🤨😩😉🥲😋😛🤓😏😭😯😵😐😘😢😠").map(String.init)
+    
+    @State private var currentEmoji: [String] = []
+    
+    @State private var leftCard: [String] = []
+    @State private var rightCard: [String] = []
+    
+    var itemCount: Int
+    
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -20,8 +30,18 @@ struct ContentView: View {
         }
         .padding()
     }
+    
+    func createLevel() {
+        currentEmoji = allEmoji.shuffled()
+        
+        withAnimation(.spring(duration: 0.75)) {
+            leftCard = Array(currentEmoji[0..<itemCount]).shuffled()
+            rightCard = Array(currentEmoji[itemCount + 1..<itemCount + itemCount] + [currentEmoji[0]]).shuffled()
+            
+        }
+    }
 }
 
 #Preview {
-    ContentView()
+    ContentView(itemCount: 9)
 }
