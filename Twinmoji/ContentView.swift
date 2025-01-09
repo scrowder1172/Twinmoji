@@ -10,6 +10,12 @@
 
 import SwiftUI
 
+enum GameState {
+    case waiting
+    case player1Answering
+    case player2Answering
+}
+
 struct ContentView: View {
     
     let allEmoji = Array("😎🥹🥰😔😂😳🧐🙂😇😅😆😙😬🙃😍🥸😣😶🙄🤨😩😉🥲😋😛🤓😏😭😯😵😐😘😢😠").map(String.init)
@@ -18,6 +24,15 @@ struct ContentView: View {
     
     @State private var leftCard: [String] = []
     @State private var rightCard: [String] = []
+    
+    @State private var gameState = GameState.waiting
+    
+    @State private var player1Score: Int = 0
+    @State private var player2Score: Int = 0
+    
+    @State private var answerColor: Color = .clear
+    @State private var answerScale: Double = 1.0
+    @State private var answerAnchor = UnitPoint.center
     
     var itemCount: Int
     
@@ -48,6 +63,20 @@ struct ContentView: View {
             rightCard = Array(currentEmoji[itemCount + 1..<itemCount + itemCount] + [currentEmoji[0]]).shuffled()
             
         }
+    }
+    
+    func selectPlayer1() {
+        guard gameState == .waiting else { return }
+        answerColor = .blue
+        answerAnchor = .leading
+        gameState = .player1Answering
+    }
+    
+    func selectPlayer2() {
+        guard gameState == .waiting else { return }
+        answerColor = .red
+        answerAnchor = .trailing
+        gameState = .player2Answering
     }
 }
 
