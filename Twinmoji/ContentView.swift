@@ -41,6 +41,9 @@ struct ContentView: View {
             PlayerButton(gameState: gameState, score: player1Score, color: .blue, onSelect: selectPlayer1)
             
             ZStack {
+                answerColor
+                    .scaleEffect(x: answerScale, anchor: answerAnchor)
+                
                 if leftCard.isEmpty == false {
                     HStack {
                         CardView(card: leftCard)
@@ -74,6 +77,7 @@ struct ContentView: View {
         answerColor = .blue
         answerAnchor = .leading
         gameState = .player1Answering
+        runTheClock()
     }
     
     func selectPlayer2() {
@@ -81,6 +85,27 @@ struct ContentView: View {
         answerColor = .red
         answerAnchor = .trailing
         gameState = .player2Answering
+        runTheClock()
+    }
+    
+    func timeOut() {
+        if gameState == .player1Answering {
+            player1Score -= 1
+        } else if gameState == .player2Answering {
+            player2Score -= 1
+        }
+        
+        gameState = .waiting
+    }
+    
+    func runTheClock() {
+        answerScale = 1
+        
+        withAnimation(.linear(duration: 1)) {
+            answerScale = 0
+        } completion: {
+            timeOut()
+        }
     }
 }
 
