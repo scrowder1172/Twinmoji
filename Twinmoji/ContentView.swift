@@ -41,23 +41,34 @@ struct ContentView: View {
     @Binding var isGameActive: Bool
     
     var body: some View {
-        HStack(spacing: 0) {
-            PlayerButton(gameState: gameState, score: player1Score, color: .blue, onSelect: selectPlayer1)
-            
-            ZStack {
-                answerColor
-                    .scaleEffect(x: answerScale, anchor: answerAnchor)
+        ZStack (alignment: .topTrailing){
+            HStack(spacing: 0) {
+                PlayerButton(gameState: gameState, score: player1Score, color: .blue, onSelect: selectPlayer1)
                 
-                if leftCard.isEmpty == false {
-                    HStack {
-                        CardView(card: leftCard, userCanAnswer: gameState != .waiting, onSelect: checkAnswer)
-                        CardView(card: rightCard, userCanAnswer: gameState != .waiting, onSelect: checkAnswer)
+                ZStack {
+                    answerColor
+                        .scaleEffect(x: answerScale, anchor: answerAnchor)
+                    
+                    if leftCard.isEmpty == false {
+                        HStack {
+                            CardView(card: leftCard, userCanAnswer: gameState != .waiting, onSelect: checkAnswer)
+                            CardView(card: rightCard, userCanAnswer: gameState != .waiting, onSelect: checkAnswer)
+                        }
+                        .padding(.horizontal, 10)
                     }
-                    .padding(.horizontal, 10)
                 }
+                
+                PlayerButton(gameState: gameState, score: player2Score, color: .red, onSelect: selectPlayer2)
             }
             
-            PlayerButton(gameState: gameState, score: player2Score, color: .red, onSelect: selectPlayer2)
+            Button("End Game", systemImage: "xmark.circle") {
+                isGameActive = false
+            }
+            .symbolVariant(.fill)
+            .labelStyle(.iconOnly)
+            .font(.largeTitle)
+            .tint(.white)
+            .padding(40)
         }
         .ignoresSafeArea()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
