@@ -114,7 +114,9 @@ struct ContentView: View {
         runTheClock()
     }
     
-    func timeOut() {
+    func timeOut(for emoji: [String]) {
+        guard currentEmoji == emoji else { return }
+        
         if gameState == .player1Answering {
             player1Score -= 1
         } else if gameState == .player2Answering {
@@ -126,11 +128,12 @@ struct ContentView: View {
     
     func runTheClock() {
         answerScale = 1
+        let checkEmoji = currentEmoji
         
         withAnimation(.linear(duration: answerTime)) {
             answerScale = 0
         } completion: {
-            timeOut()
+            timeOut(for: checkEmoji)
         }
     }
     
