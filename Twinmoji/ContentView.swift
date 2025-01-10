@@ -35,6 +35,8 @@ struct ContentView: View {
     @State private var answerAnchor = UnitPoint.center
     
     var itemCount: Int
+    var answerTime: Double
+    @Binding var isGameActive: Bool
     
     var body: some View {
         HStack(spacing: 0) {
@@ -101,7 +103,7 @@ struct ContentView: View {
     func runTheClock() {
         answerScale = 1
         
-        withAnimation(.linear(duration: 1)) {
+        withAnimation(.linear(duration: answerTime)) {
             answerScale = 0
         } completion: {
             timeOut()
@@ -136,5 +138,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(itemCount: 9)
+    ContentView(itemCount: 9, answerTime: 1.0, isGameActive: .constant(true))
 }
